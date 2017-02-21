@@ -1,3 +1,4 @@
+/* Circular queue example using linked list */
 #include<stdio.h>
 #include<stdlib.h>
 
@@ -5,7 +6,9 @@ typedef struct node{
 	int data;
 	struct node *next;
 }node_c;
-void print_elements(node_c **front, node_c **rear){
+
+/* Function prints the values in the circular queue */
+void print_elements(node_c **front){
         node_c *cur= *front;
         node_c *temp = NULL;
 	if( *front == NULL){
@@ -14,13 +17,14 @@ void print_elements(node_c **front, node_c **rear){
 	}
         printf("Values of the circular queue: ");
 	while(cur != temp){
- 		printf("%d ",cur->data);	
+		printf("%d ",cur->data);
                 cur = cur->next;
 		temp = *front;
         }
 	printf("\n");
 }
-/* Insert elements in the queue */
+
+/* Insert elements at the end of the circular queue */
 void insert_elements(node_c **front, node_c **rear, int num){
 	node_c *cur = NULL;
 	cur = malloc(sizeof(node_c));
@@ -32,13 +36,14 @@ void insert_elements(node_c **front, node_c **rear, int num){
 	}
 	*rear = cur;
 	(*rear)->next = *front;
-	print_elements(front, rear);
+	print_elements(front);
 }
 
+/* Remove elements at the front of the circular queue */
 void remove_elements(node_c **front, node_c **rear){
 	node_c *temp;
 	if(*front == NULL){
-		printf("Queue is empty\n");	
+		printf("Queue is empty\n");
 	}
 	if(*front == *rear){
 		printf("Deleting the only element %d\n", (*front)->data);
@@ -62,25 +67,25 @@ int main(){
 
         printf("Enter a choice:\n");
         do{
-        	printf("1.Enter element to the circular queue:\n");
-       		printf("2.Remove element from the circular queue:\n");
-       		printf("3.Print the elements of the circular queue:\n");
-       		printf("4. Exit\n");
+		printf("1.Enter element to the circular queue:\n");
+		printf("2.Remove element from the circular queue:\n");
+		printf("3.Print the elements of the circular queue:\n");
+		printf("4. Exit\n");
 
-       		scanf("%d", &ch);
-       		switch(ch){
-           		case 1: printf("Enter the value:\n");
-                  		scanf("%d", &num);
-                  		insert_elements(&front, &rear, num);
-                  		break;
-           		case 2: remove_elements(&front, &rear);
-                  		break;
-           		case 3:print_elements(&front, &rear);
-                  		break;
-			case 4:break;
-                        default: printf("Wrong choice!!! Enter a valid choice\n");
-				 break;
- 		}
+		scanf("%d", &ch);
+		switch(ch){
+			case 1: printf("Enter the value:\n");
+				scanf("%d", &num);
+				insert_elements(&front, &rear, num);
+				break;
+			case 2: remove_elements(&front, &rear);
+				break;
+			case 3: print_elements(&front);
+				break;
+			case 4: break;
+			default: printf("Wrong choice!!! Enter a valid choice\n");
+				break;
+		}
 	}while(ch!=4);
 	return 0;
 }
